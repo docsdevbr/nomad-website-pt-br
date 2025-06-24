@@ -1,0 +1,35 @@
+---
+# Copyright (c) 2024 HashiCorp, Inc.
+# Nomad and the Nomad logo are trademarks of HashiCorp.
+
+# Licensed under the Business Source License, Version 1.1.
+# The original work was translated from English into Brazilian Portuguese.
+# https://github.com/hashicorp/nomad/blob/main/LICENSE
+
+layout: docs
+page_title: trimspace - Functions - Configuration Language
+description: |-
+  The trimspace function removes space characters from the start and end of
+  a given string.
+---
+
+# `trimspace` Function
+
+`trimspace` removes any space characters from the start and end of the given
+string.
+
+This function follows the Unicode definition of "space", which includes
+regular spaces, tabs, newline characters, and various other space-like
+characters.
+
+## Examples
+
+```shell-session
+> trimspace("  hello\n\n")
+hello
+```
+
+## Related Functions
+
+- [`chomp`](/nomad/docs/job-specification/hcl2/functions/string/chomp) removes just line ending characters from the _end_ of
+  a string.

@@ -1,0 +1,40 @@
+---
+# Copyright (c) 2024 HashiCorp, Inc.
+# Nomad and the Nomad logo are trademarks of HashiCorp.
+
+# Licensed under the Business Source License, Version 1.1.
+# The original work was translated from English into Brazilian Portuguese.
+# https://github.com/hashicorp/nomad/blob/main/LICENSE
+
+layout: docs
+page_title: Base Plugin
+description: Learn about how to author a Nomad Autoscaler plugin.
+---
+
+# Base Plugin
+
+The base plugin is an interface required of all autoscaler plugins,
+providing a set of common operations.
+
+## Plugin API
+
+#### `PluginInfo() (*PluginInfo, error)`
+
+A `PluginInfo` contains metadata about the plugin. For example,
+the Prometheus APM plugin returns the following;
+
+```go
+PluginInfo{
+    // Name of the plugin
+    Name: "prometheus",
+    // Plugin type: "apm", "strategy", or "target"
+    PluginType: "apm"
+}
+```
+
+#### `SetConfig(config map[string]string) error`
+
+The `SetConfig` function is called when starting an instance of the plugin. It contains the
+configuration for a named instance of the plugin as provided in the autoscaler [agent config][plugin_config].
+
+[plugin_config]: /nomad/tools/autoscaling/agent

@@ -21,25 +21,25 @@ description: >-
 
 Bem-vindo ao guia de introdução ao Nomad.
 Este guia é o melhor lugar para começar a usar o Nomad.
-Abordamos o que é o Nomad, quais problemas ele pode resolver, como ele se
-compara aos softwares existentes e como você pode começar a usá-lo.
+Abordamos o que é Nomad, quais problemas ele pode resolver, como ele se compara
+aos softwares existentes e como você pode começar a usá-lo.
 Se você conhece os conceitos básicos do Nomad, a [documentação](/nomad/docs) e
 os [tutoriais](/nomad/tutorials) fornecem uma referência mais detalhada dos
 recursos disponíveis.
 
 <VideoEmbed url="https://www.youtube.com/embed/s_Fm9UtL4YU"/>
 
-## O que é o Nomad?
+## O que é Nomad?
 
-O Nomad é um orquestrador de cargas de trabalho flexível que permite a uma
+Nomad é um orquestrador de cargas de trabalho flexível que permite a uma
 organização implantar e gerenciar facilmente qualquer aplicação em contêiner ou
 legada usando um fluxo de trabalho simples e unificado.
 O Nomad pode executar uma carga de trabalho diversificada de aplicações Docker,
 não conteinerizadas, microsserviços e em lote.
 
 O Nomad permite que as pessoas desenvolvedoras utilizem infraestrutura como
-código declarativa para implantar aplicações.
-O Nomad utiliza bin packing para agendar tarefas com eficiência e otimizar a
+código declarativo para implantar aplicações.
+O Nomad utiliza bin packing para agendar jobs com eficiência e otimizar a
 utilização de recursos.
 O Nomad é compatível com macOS, Windows e Linux.
 
@@ -89,7 +89,8 @@ Trivago, SAP, Pandora, Roblox, eBay, Deluxe Entertainment e muito mais.
 
 ## Comparando o Nomad com outras ferramentas
 
-As seguintes características diferenciam o Nomad de produtos relacionados:
+As seguintes características geralmente diferenciam o Nomad de produtos
+relacionados:
 
 - **Simplicidade**: O Nomad é executado como um processo único, sem dependências
   externas.
@@ -98,17 +99,17 @@ As seguintes características diferenciam o Nomad de produtos relacionados:
   As pessoas desenvolvedoras podem definir e executar aplicações com facilidade.
 - **Flexibilidade**: O Nomad pode executar uma carga de trabalho diversificada
   de aplicações em contêineres, legadas, microsserviços e em lote.
-  O Nomad pode agendar serviços, processamento em lote e tarefas do sistema, e
-  pode ser executado em Linux e Windows.
+  O Nomad pode agendar jobs de serviços, de processamento em lote e de sistema,
+  e pode ser executado em Linux e Windows.
 - **Escalabilidade e alto desempenho**: O Nomad pode agendar milhares de
   contêineres por segundo, escalar para milhares de nós em um único cluster e
   federar facilmente entre regiões e provedores de nuvem.
 - **Interoperabilidade da HashiCorp**: O Nomad integra-se elegantemente com o
   Vault para gerenciamento de segredos e com o Consul para descoberta de
   serviços e configuração dinâmica.
-  A arquitetura do Nomad semelhante à do Consul e a especificação de tarefas
+  A arquitetura do Nomad semelhante à do Consul e a especificação de jobs
   semelhante à do Terraform reduzem a barreira de entrada para pessoas usuárias
-  existentes da pilha HashiCorp.
+  existentes da stack HashiCorp.
 
 Existem muitas categorias relevantes para comparação, incluindo gerenciadores de
 cluster, gerenciadores de recursos, gerenciadores de carga de trabalho e
@@ -136,7 +137,7 @@ Vault para gerenciamento de segredos.
 O Kubernetes foi projetado como uma coleção de vários serviços interoperacionais
 que, juntos, fornecem a funcionalidade completa.
 A coordenação e o armazenamento são fornecidos pelo etcd no núcleo.
-O estado é encapsulado por controladores de API, que são consumidos por outros
+O estado é encapsulado por controladores de API, que são consumidas por outros
 serviços que fornecem APIs de alto nível para recursos como agendamento.
 O Kubernetes suporta a execução em uma configuração de alta disponibilidade, mas
 é operacionalmente complexo de configurar.
@@ -192,8 +193,8 @@ Ele pode ser implantado em várias zonas de disponibilidade, regiões e data
 centers com um único cluster ou vários clusters.
 O Nomad foi projetado para lidar nativamente com implantações multicluster sem a
 sobrecarga de executar clusters em clusters.
-Isso facilita o dimensionamento da implantação de aplicações em vários data
-centers, regiões e nuvens sem complexidade adicional.
+Isso facilita escalar a implantação de aplicações em vários data centers,
+regiões e nuvens sem complexidade adicional.
 
 O Nomad realizou rigorosos testes de benchmark de escalabilidade com o
 [desafio de 1 milhão de contêineres](https://www.hashicorp.com/c1m) em 2016 e o
@@ -210,27 +211,27 @@ Cada grupo possui requisitos diferentes e utiliza tecnologias com base em suas
 necessidades e restrições específicas.
 
 Empresas de médio a grande porte enfrentam desafios ao tentar padronizar
-centenas a milhares de pessoas desenvolvedoras e administradoras de software em
+centenas a milhares de pessoas desenvolvedoras de software e administradoras em
 um único orquestrador (Kubernetes, Nomad, Mesos), pois nenhum escalonador
 atualmente atende a todas as aplicações, ambientes, projetos e times.
 
 Empresas atualmente no Global 2000, como Intel, Autodesk e GitHub, com múltiplos
 produtos e unidades de negócios, executam organicamente o Nomad e o Kubernetes
-para se complementarem mutuamente.
+para se complementarem.
 Elas aproveitam cada escalonador em seus pontos fortes, com o Kubernetes por seu
 ecossistema de ponta e o Nomad pela manutenção simples e flexibilidade no
-escalonamento principal.
+escalonamento essencial.
 
 ![Como as organizações aproveitam o Nomad e o Kubernetes](/img/nomad-kubernetes.png)
 
 Estas são as características que observamos em times que normalmente adotam o
 Kubernetes em hospedagem própria:
 
-- Casos de uso sem restrições, como aprendizado de máquina (ML), serverless e
-  big data, que exigem o ecossistema do Kubernetes e Helm chart;
+- Casos de uso que começam do zero, como aprendizado de máquina (ML), serverless
+  e big data, que exigem o ecossistema do Kubernetes e charts do Helm;
 - Orçamento elevado e time em tempo integral para manter o Kubernetes;
-- Projetos de alto perfil com investimento significativo e cronograma de longo
-  prazo (plurianual);
+- Projetos de perfil avançado com investimento significativo e cronograma de
+  longo prazo (plurianual);
 - Implantação e gerenciamento de novas aplicações nativas da nuvem;
 - Ambiente de nuvem pública, como AWS, GCP e Azure.
 
@@ -240,9 +241,9 @@ Características dos times que normalmente adotam o Nomad:
   (Windows, Java);
 - Times de pequeno/médio porte com capacidade limitada para manter um
   orquestrador;
-- Implantação e gerenciamento das principais aplicações existentes;
+- Implantação e gerenciamento das aplicações essenciais existentes;
 - Ambiente on-premise ou híbrido;
-- Exigem simplicidade para se mover rapidamente e atender às necessidades de
+- Exigem simplicidade para agir rapidamente e atender às necessidades de
   negócios com prazos difíceis.
 
 Continuamos vendo pequenas empresas continuarem a padronizar usando um único
@@ -269,11 +270,11 @@ A Amazon Web Services fornece o Elastic Container Service (ECS), que é um
 gerenciador de cluster.
 O serviço ECS está disponível apenas na AWS e só pode ser usado para cargas de
 trabalho do Docker.
-A Amazon fornece às pessoas clientes o agente que é instalado em instâncias do
-EC2, mas não fornece os servidores, que são um serviço hospedado da AWS.
+A Amazon fornece aos clientes o agente que é instalado em instâncias do EC2, mas
+não fornece os servidores, que são um serviço hospedado da AWS.
 
 Há uma série de diferenças fundamentais entre o Nomad e o ECS.
-O Nomad é totalmente de código aberto, incluindo os componentes de cliente e
+O Nomad é totalmente de código aberto, incluindo os componentes cliente e
 servidor.
 Por outro lado, apenas o código do agente do ECS é aberto e os servidores são de
 código fechado e gerenciados pela Amazon.
@@ -286,7 +287,7 @@ Os clusters no Nomad podem abranger vários data centers e regiões, o que
 significa que um único cluster pode gerenciar simultaneamente máquinas na AWS,
 Azure e GCE.
 
-O serviço ECS é focado especificamente em contêineres e na engine do Docker,
+O serviço ECS é focado especificamente em contêineres e na Docker Engine,
 enquanto o Nomad é mais genérico.
 O Nomad suporta aplicações virtualizadas, em contêineres e autônomas, incluindo
 o Docker.
@@ -298,7 +299,7 @@ os drivers comuns.
 [Terraform](https://www.terraform.io/) é uma ferramenta para construir, alterar
 e versionar infraestrutura com segurança e eficiência.
 Os arquivos de configuração descrevem para o Terraform os componentes
-necessários para executar uma única aplicação ou todo o seu datacenter.
+necessários para executar uma única aplicação ou todo o seu data center.
 O Terraform gera um plano de execução descrevendo o que fará para atingir o
 estado desejado e, em seguida, o executa para construir a infraestrutura
 descrita.
@@ -308,8 +309,8 @@ criar planos de execução incrementais que podem ser aplicados.
 O Nomad difere do Terraform em vários aspectos importantes.
 O Terraform foi projetado para suportar qualquer tipo de recurso, incluindo
 componentes de baixo nível, como instâncias de computação, armazenamento e rede,
-bem como componentes de alto nível, como entradas de DNS, recursos SaaS, etc.
-O Terraform sabe como criar, provisionar e gerenciar o ciclo de vida desses
+bem como componentes de alto nível, como registros DNS, recursos de SaaS, etc.
+O Terraform consegue criar, provisionar e gerenciar o ciclo de vida desses
 recursos.
 O Nomad é executado na infraestrutura existente e gerencia o ciclo de vida das
 aplicações em execução nessa infraestrutura.
@@ -322,7 +323,7 @@ ou excluídos e pode lidar com falhas de nós.
 Isso requer operação contínua, em vez de uma única operação como o Terraform.
 
 Para pequenas infraestruturas com apenas alguns servidores ou aplicações, a
-complexidade do Nomad pode não compensar o simples uso do Terraform para
+complexidade do Nomad pode não compensar a simplicidade de usar o Terraform para
 atribuir estaticamente aplicações às máquinas.
 Em escalas maiores, o Terraform deve ser usado para provisionar capacidade para
 o Nomad, e o Nomad deve ser usado para gerenciar o agendamento de aplicações

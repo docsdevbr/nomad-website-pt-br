@@ -54,10 +54,10 @@ A obra original foi traduzida do inglês para o português brasileiro.
 
 [license]: LICENSE
 
-[page]: https://docs.dev.br/docs/nomad/doc/
+[page]: https://pt.docs.dev.br/p/nomad/
 
 [readme-en]: README.EN.md
 
 [readme-pt-br]: README.md
 
-[sponsor]: https://docs.dev.br/apoie-o-projeto
+[sponsor]: https://pt.docs.dev.br/sponsor

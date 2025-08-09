@@ -93,7 +93,7 @@ Esta etapa extra adiciona uma camada de indireção entre a rede do seu host (o
 computador que você está usando no momento) e a rede da VM que executa seus
 contêineres.
 
-Isso significa que, por padrão, suas tarefas do Docker não poderão acessar
+Isso significa que, por padrão, suas tasks do Docker não poderão acessar
 endpoints disponíveis na sua rede host, como um agente Consul local.
 
 Para configurar corretamente esta conexão, você precisará vincular
@@ -118,9 +118,9 @@ Para iniciar o Consul na mesma rede, você pode executar este comando:
 $ consul agent -dev -client=0.0.0.0 -bind=192.168.0.10
 ```
 
-Agora seus serviços serão registrados no Consul usando o IP correto e suas
-tarefas poderão se comunicar.
-Para acessar suas tarefas a partir da sua máquina host, você precisará usar o
+Agora seus serviços serão registrados no Consul usando o IP correto e suas tasks
+poderão se comunicar.
+Para acessar suas tasks a partir da sua máquina host, você precisará usar o
 endereço IP da interface de rede.
 
 ```shell-session

@@ -6,46 +6,57 @@
 # The original work was translated from English into Brazilian Portuguese.
 # https://github.com/hashicorp/nomad/blob/main/LICENSE
 
+source_url: https://github.com/hashicorp/nomad/blob/main/website/content/docs/glossary.mdx
+revision: 53b083b8c5e09c8f12ae6a9db9fe6f88e75c2d12
+status: wip
+
 layout: docs
-page_title: Glossary
-description: Nomad key concepts include allocation, authoritative regions, bin packing, client, datacenters, deployment, driver, evaluation, job, node, node pool, regions, server, task, and task group.
+page_title: Glossário
+description: |-
+  Os principais conceitos do Nomad incluem alocação, regiões autoritativas, bin
+  packing, cliente, data centers, implantação, driver, avaliação, job, nó, pool
+  de nós, regiões, servidor, task e task group.
 ---
 
-# Glossary
+# Glossário
 
-This glossary provides definitions and explanations for important terms and
-concepts used in Nomad.
+Este glossário fornece definições e explicações para termos e conceitos
+importantes usados no Nomad.
 
-## Allocation
+## Alocação
 
-An Allocation is a mapping between a task group in a job and a client node. A
-single job may have hundreds or thousands of task groups, meaning an
-equivalent number of allocations must exist to map the work to client
-machines. Allocations are created by the Nomad servers as part of scheduling
-decisions made during an evaluation.
+Uma alocação é um mapeamento entre um task group em um job e um nó cliente.
+Um único job pode ter centenas ou milhares de task groups, o que significa que
+um número equivalente de alocações deve existir para mapear o trabalho para as
+máquinas clientes.
+As alocações são criadas pelos servidores Nomad como parte das decisões de
+agendamento tomadas durante uma avaliação.
 
-## Authoritative and Non-Authoritative Regions
+## Regiões autoritativas e não autoritativas
 
-The authoritative region is the region in a federated multi-region cluster that
-holds the source of true for entities replicated across regions, such as ACL
-tokens, policies, and roles, namespaces, and node pools.
+A região autoritativa é a região em um cluster multirregional federado que
+contém a fonte da verdade para entidades replicadas entre regiões, como tokens
+de ACL, políticas e funções, namespaces e pools de nós.
 
-All other regions are considered non-authoritative regions and replicate these
-entities by pulling them from the authoritative region.
+Todas as outras regiões são consideradas regiões não autoritativas e replicam
+essas entidades extraindo-as da região autoritativa.
 
-## Bin Packing
+## Bin packing
 
-Bin Packing is the process of filling bins with items in a way that maximizes
-the utilization of bins. This extends to Nomad, where the clients are "bins"
-and the items are task groups. Nomad optimizes resources by efficiently bin
-packing tasks onto client machines.
+Bin packing é o processo de preencher recipientes (bins) com itens de forma a
+maximizar a utilização dos recipientes.
+Isso se estende ao Nomad, onde os clientes são bins e os itens são task groups.
+O Nomad otimiza recursos ao fazer bin packing eficiente de tasks em máquinas
+clientes.
 
-## Client
+## Cliente
 
-A Nomad client is an agent configured to run and manage tasks using available
-compute resources on a machine. The agent is responsible for registering with
-the servers, watching for any work to be assigned and executing tasks. The
-Nomad agent is a long lived process which interfaces with the servers.
+Um cliente Nomad é um agente configurado para executar e gerenciar tasks usando
+os recursos de computação disponíveis em uma máquina.
+O agente é responsável por se registrar nos servidores, monitorar qualquer
+trabalho a ser atribuído e executar tasks.
+O agente Nomad é um processo de longa duração que faz interface com os
+servidores.
 
 ## Datacenters
 

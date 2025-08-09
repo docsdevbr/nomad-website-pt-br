@@ -47,7 +47,7 @@ isso:
 Dentro de cada região, temos clientes e servidores.
 Os servidores são responsáveis por aceitar jobs de pessoas usuárias, gerenciar
 clientes e
-[calcular a alocação das tarefas](/nomad/docs/concepts/scheduling/how-scheduling-works).
+[calcular a alocação das tasks](/nomad/docs/concepts/scheduling/how-scheduling-works).
 Cada região pode ter clientes de vários data centers, permitindo que um pequeno
 número de servidores lide com clusters muito grandes.
 
@@ -93,10 +93,10 @@ alocações para atribuir trabalho aos clientes.
 
 As pessoas usuárias utilizam a CLI ou API do Nomad para enviar jobs aos
 servidores.
-Um job representa um estado desejado e fornece o conjunto de tarefas que devem
-ser executadas.
-Os servidores são responsáveis pelo agendamento das tarefas, o que é feito
-encontrando uma alocação ideal para cada tarefa, de forma que a utilização de
+Um job representa um estado desejado e fornece o conjunto de tasks que devem ser
+executadas.
+Os servidores são responsáveis pelo agendamento das tasks, o que é feito
+encontrando uma alocação ideal para cada task, de forma que a utilização de
 recursos seja maximizada, satisfazendo todas as restrições especificadas pelo
 job.
 A utilização de recursos é maximizada por bin packing, no qual o agendamento

@@ -6,14 +6,22 @@
 # The original work was translated from English into Brazilian Portuguese.
 # https://github.com/hashicorp/nomad/blob/main/LICENSE
 
+source_url: https://github.com/hashicorp/nomad/blob/main/website/content/docs/ecosystem.mdx
+revision: 53b083b8c5e09c8f12ae6a9db9fe6f88e75c2d12
+status: ready
+
 layout: docs
-page_title: Nomad Ecosystem
-description: Learn about the Nomad ecosystem, which includes CI/CD, task drivers, service mesh, service proxy, secrets management, observability, autoscaling, storage, provisioning, GPUs, and cloud native support.
+page_title: Ecossistema do Nomad
+description: |-
+  Saiba mais sobre o ecossistema do Nomad, que inclui CI/CD, drivers de tarefas,
+  malha de serviços, proxy de serviços, gerenciamento de segredos,
+  observabilidade, escalonamento automático, armazenamento, provisionamento,
+  GPUs e suporte à nuvem nativa.
 ---
 
-# Nomad Ecosystem
+# Ecossistema do Nomad
 
-## Continuous Integration & Delivery
+## Integração e entrega contínuas
 
 - [GitLab](https://www.hashicorp.com/resources/nomad-ci-cd-developer-workflows-and-integrations)
 - [Codefresh](https://codefresh.io/docs/docs/yaml-examples/examples/nomad/)
@@ -22,7 +30,7 @@ description: Learn about the Nomad ecosystem, which includes CI/CD, task drivers
 - [Jenkins](https://plugins.jenkins.io/nomad/)
 - [Buildkite](https://buildkite.com/works-with/hashicorp)
 
-## Task Drivers
+## Drivers de tarefas
 
 - [Containerd](/nomad/plugins/drivers/community/containerd)
 - [Windows IIS](https://github.com/Roblox/nomad-driver-iis)
@@ -32,37 +40,37 @@ description: Learn about the Nomad ecosystem, which includes CI/CD, task drivers
 - [Firecracker](/nomad/plugins/drivers/community/firecracker-task-driver)
 - [Podman](/nomad/plugins/drivers/podman)
 
-## Application Definition & Image Build
+## Definição de aplicação e criação de imagem
 
 - [Nomad Pack](https://github.com/hashicorp/nomad-pack)
 - [Levant](https://github.com/hashicorp/levant)
 - [Packer](https://www.packer.io/)
 - [Waypoint](/waypoint/tutorials/get-started-nomad)
 
-## Container Registry
+## Registro de contêineres
 
 - [JFrog Artifactory](https://jfrog.com/blog/cluster-management-made-simple-with-jfrog-artifactory-and-hashicorp-nomad/)
 
-## Observability and Analysis
+## Observabilidade e analytics
 
 - Prometheus
-  - [Using Prometheus to Monitor Nomad Metrics](/nomad/tutorials/manage-clusters/prometheus-metrics)
-  - [Start Prometheus](/nomad/tutorials/nomad-1-0/dynamic-application-sizing#start-prometheus)
+  - [Usando o Prometheus para monitorar métricas do Nomad](/nomad/tutorials/manage-clusters/prometheus-metrics)
+  - [Inicie o Prometheus](/nomad/tutorials/nomad-1-0/dynamic-application-sizing#start-prometheus)
 - [Grafana](https://www.metricfire.com/blog/monitoring-hashicorp-nomad-with-prometheus-and-grafana/)
 - [DataDog](https://docs.datadoghq.com/integrations/nomad/)
 - [Turbonomics](https://www.youtube.com/watch?v=lwtIaPpdDsc)
 - [Circonus](/nomad/tools/autoscaling/agent/telemetry#circonus)
 - [Splunk](https://www.kmruddy.com/2020/deploying-splunk-enterprise-with-nomad/)
 
-## Secret Management
+## Gerenciamento de segredos
 
 - [Vault](/nomad/docs/secure/vault)
 
-## Service Mesh
+## Malha de serviços
 
 - [Consul](/nomad/docs/networking/consul/service-mesh)
 
-## Provisioning
+## Provisionamento
 
 - [Terraform](https://registry.terraform.io/providers/hashicorp/nomad/latest/docs)
 - [Chef](https://github.com/nathwill/chef-nomad)
@@ -72,13 +80,13 @@ description: Learn about the Nomad ecosystem, which includes CI/CD, task drivers
 
 - [CNI](https://www.cni.dev/)
 
-## Service Proxy
+## Proxy de serviços
 
 - [Envoy](/nomad/docs/networking/consul)
 - [NGINX](/nomad/tutorials/load-balancing/load-balancing-nginx)
 - [Traefik](/nomad/tutorials/load-balancing/load-balancing-traefik)
 
-## Storage
+## Armazenamento
 
 - [CSI](/nomad/docs/architecture/storage/csi)
 
@@ -88,7 +96,7 @@ description: Learn about the Nomad ecosystem, which includes CI/CD, task drivers
   - [Using HashiCorp Nomad to Schedule GPU Workloads](https://developer.nvidia.com/blog/hashicorp-nomad-gpu-scheduling/)
   - [Running GPU-Accelerated Applications on Nomad](https://www.hashicorp.com/resources/running-gpu-accelerated-applications-on-nomad)
 
-## Autoscaling
+## Escalonamento automático
 
 - AWS ASGs
   - [Dynamically autoscale your Nomad clusters](https://www.hashicorp.com/blog/cluster-scaling-with-the-hashicorp-nomad-autoscaler)

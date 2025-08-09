@@ -1,0 +1,36 @@
+---
+# Copyright (c) 2024 HashiCorp, Inc.
+# Nomad and the Nomad logo are trademarks of HashiCorp.
+
+# Documentation licensed under the Business Source License, Version 1.1.
+# The original work was translated from English into Brazilian Portuguese.
+# https://github.com/hashicorp/nomad/blob/main/LICENSE
+
+layout: docs
+page_title: 'nomad node meta command reference'
+description: |
+  The nomad node meta commands read and update node metadata.
+---
+
+# nomad node meta reference
+
+The `meta` command is used to read and update node metadata. This metadata is
+available for [interpolation using the `${meta.<key>}` syntax in jobs][interp].
+
+## Usage
+
+Usage: `nomad node meta <subcommand> [options]`
+
+The `apply` subcommand allows for dynamically updating node metadata. The
+`read` subcommand allows reading all of the metadata set on the client. All
+commands interact directly with a client and allow setting a custom target with
+the `-node-id` option.
+
+Please see the individual subcommand help for detailed usage information:
+
+ - [`apply`][apply] - Modify node metadata
+ - [`read`][read] - Read node metadata
+
+[interp]: /nomad/docs/reference/runtime-variable-interpolation#node-attributes
+[apply]: /nomad/commands/node/meta/apply
+[read]: /nomad/commands/node/meta/read

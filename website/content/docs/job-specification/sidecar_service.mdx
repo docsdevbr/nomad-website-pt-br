@@ -10,7 +10,7 @@ layout: docs
 page_title: sidecar_service block in the job specification
 description: |-
   The `sidecar_service` block allows specifying options for configuring
-  sidecar proxies used in Consul Connect integration
+  sidecar proxies used in Consul service mesh integration
 ---
 
 # `sidecar_service` block in the job specification
@@ -19,7 +19,7 @@ description: |-
 
 The `sidecar_service` block allows configuring various options for the sidecar
 proxy managed by Nomad for [Consul
-Connect](/nomad/docs/integrations/consul-connect) integration. It is
+service mesh](/nomad/docs/networking/consul) integration. It is
 valid only within the context of a connect block.
 
 ```hcl
@@ -96,6 +96,6 @@ The following example includes specifying upstreams and meta.
 [job]: /nomad/docs/job-specification/job 'Nomad job Job Specification'
 [group]: /nomad/docs/job-specification/group 'Nomad group Job Specification'
 [task]: /nomad/docs/job-specification/task 'Nomad task Job Specification'
-[interpolation]: /nomad/docs/runtime/interpolation 'Nomad interpolation'
+[interpolation]: /nomad/docs/reference/runtime-variable-interpolation 'Nomad interpolation'
 [sidecar_service]: /nomad/docs/job-specification/sidecar_service 'Nomad sidecar service Specification'
 [proxy]: /nomad/docs/job-specification/proxy 'Nomad sidecar proxy config Specification'

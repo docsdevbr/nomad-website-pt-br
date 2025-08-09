@@ -21,7 +21,7 @@ The `multiregion` block specifies that a job will be deployed to multiple
 one specified by the `region` field or the `-region` command line flag to
 `nomad job run`.
 
-<EnterpriseAlert product="nomad"/>
+<EnterpriseAlert/>
 
 Federated Nomad clusters are members of the same gossip cluster but not the
 same raft cluster; they don't share their data stores. Each region in a
@@ -284,13 +284,13 @@ group "worker" {
 }
 ```
 
-[federated regions]: /nomad/tutorials/manage-clusters/federation
+[federated regions]: //nomad/docs/deploy/clusters/federate-regions
 [`update` block]: /nomad/docs/job-specification/update
 [update-auto-revert]: /nomad/docs/job-specification/update#auto_revert
 [examples]: #examples
-[upgrade strategies]: /nomad/tutorials/job-updates
-[`nomad deployment unblock`]: /nomad/docs/commands/deployment/unblock
+[upgrade strategies]: /nomad/docs/job-declare/strategy/
+[`nomad deployment unblock`]: /nomad/commands/deployment/unblock
 [parameterized job]: /nomad/docs/job-specification/parameterized
-[`job dispatch`]: /nomad/docs/commands/job/dispatch
+[`job dispatch`]: /nomad/commands/job/dispatch
 [HTTP API]: /nomad/api-docs/jobs#dispatch-job
 [time zone]: /nomad/docs/job-specification/periodic#time_zone

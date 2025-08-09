@@ -416,8 +416,8 @@ job "countdash-terminating" {
 
   datacenters = ["dc1"]
 
-  # This group provides the service that exists outside of the Consul Connect
-  # service mesh. It is using host networking and listening to a statically
+  # This group provides the service that exists outside of the Consul service mesh
+  # . It is using host networking and listening to a statically
   # allocated port.
   group "api" {
     network {
@@ -736,7 +736,7 @@ job "countdash-mesh-two" {
 [proxy]: /nomad/docs/job-specification/gateway#proxy-parameters
 [linked-service]: /nomad/docs/job-specification/gateway#linked-service-parameters
 [listener]: /nomad/docs/job-specification/gateway#listener-parameters
-[interpolation]: /nomad/docs/runtime/interpolation
+[interpolation]: /nomad/docs/reference/runtime-variable-interpolation
 [listener-service]: /nomad/docs/job-specification/gateway#listener-service-parameters
 [service-default]: /consul/docs/connect/config-entries/service-defaults
 [sidecar_task]: /nomad/docs/job-specification/sidecar_task

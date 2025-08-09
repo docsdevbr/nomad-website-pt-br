@@ -103,7 +103,7 @@ agents with [`client.enabled`] set to `true`.
   [tls_require_and_verify_client_cert](/vault/docs/configuration/listener/tcp#tls_require_and_verify_client_cert)
   is enabled in Vault.
 
-  - `create_from_role` `(string: "")` - Specifies the role to create tokens
+- `create_from_role` `(string: "")` - Specifies the role to create tokens
   from. This field defines the role used to derive task tokens when the job does
   not define a value for [`vault.role`][jobspec_vault_role]. If empty, the
   default Vault cluster role is used.
@@ -238,7 +238,7 @@ can be accomplished by sending the process a `SIGHUP` signal.
 [`vault.cluster`]: /nomad/docs/job-specification/vault#cluster
 [jobspec_vault_role]: /nomad/docs/job-specification/vault#role
 [jobspec_identity]: /nomad/docs/job-specification/identity
-[nomad-vault]: /nomad/docs/integrations/vault-integration 'Nomad Vault Integration'
+[nomad-vault]: /nomad/docs/secure/vault 'Nomad Vault Integration'
 [taskuser]: /nomad/docs/job-specification/task#user "Nomad task Block"
 [vault]: https://www.vaultproject.io/ 'Vault by HashiCorp'
 [vault_bound_aud]: /vault/api-docs/auth/jwt#bound_audiences

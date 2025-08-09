@@ -50,7 +50,7 @@ consistentes.
 ## P: O parâmetro `datacenter` do Nomad é o mesmo do Consul?
 
 Não.
-Para aqueles familiarizados com o Consul,
+Para aquelas pessoas familiarizadas com o Consul,
 [a noção de um data center do Consul][consul_dc] é mais equivalente a uma
 [região do Nomad][nomad_region].
 O Nomad suporta o agrupamento de nós em vários data centers, o que deve refletir
@@ -73,12 +73,12 @@ inicializado e pronto para uso.
 Certas opções de configuração são usadas apenas para influenciar a criação do
 estado inicial do cluster durante o bootstrapping e não são consultadas
 novamente enquanto os dados de estado permanecerem intactos.
-Normalmente, esses são valores que devem ser consistentes entre os membros do
-servidor.
-Por exemplo, a opção [`default_scheduler_config`] permite que um operador defina
-o SchedulerConfig com valores não padrão durante esse processo de inicialização,
-em vez de exigir uma chamada imediata à API assim que o cluster estiver
-instalado e funcionando.
+Normalmente, esses são valores que devem ser consistentes entre os servidores
+membros do cluster.
+Por exemplo, a opção [`default_scheduler_config`] permite que uma pessoa
+operadora defina o SchedulerConfig com valores não padrão durante esse processo
+de inicialização, em vez de exigir uma chamada imediata à API assim que o
+cluster estiver instalado e funcionando.
 
 Se o estado for completamente destruído, intencionalmente ou acidentalmente, em
 todos os servidores Nomad na mesma interrupção, o cluster será reinicializado
@@ -102,8 +102,8 @@ outra coisa que você queira acessar também deve estar na mesma interface.
 
 No Windows, recomendamos que você comece com o
 [backend WSL2 para Docker Desktop][wsl2-docker].
-Assim que estiver mais familiarizado com o Nomad, você poderá começar a
-executá-lo nativamente.
+Assim que estiver mais confortável com o Nomad, você poderá começar a executá-lo
+nativamente.
 
 Para usar a rede chamada `en0` com o endereço IP `192.168.0.10`, você pode
 iniciar o Nomad com este comando:

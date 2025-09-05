@@ -8,14 +8,14 @@
 
 source_url: https://github.com/hashicorp/nomad/blob/main/website/content/docs/glossary.mdx
 revision: 53b083b8c5e09c8f12ae6a9db9fe6f88e75c2d12
-status: wip
+status: ready
 
 layout: docs
 page_title: Glossário
 description: |-
-  Os principais conceitos do Nomad incluem alocação, regiões autoritativas, bin
-  packing, cliente, data centers, implantação, driver, avaliação, job, nó, pool
-  de nós, regiões, servidor, task e task group.
+  Os principais conceitos do Nomad incluem allocation, authoritative regions,
+  bin packing, cliente, data centers, deployment, driver, evaluation, job, node,
+  node pool, regiões, servidor, task e task group.
 ---
 
 # Glossário
@@ -23,23 +23,23 @@ description: |-
 Este glossário fornece definições e explicações para termos e conceitos
 importantes usados no Nomad.
 
-## Alocação
+## Allocation
 
-Uma alocação é um mapeamento entre um task group em um job e um nó cliente.
+Uma allocation é um mapeamento entre um task group em um job e um node cliente.
 Um único job pode ter centenas ou milhares de task groups, o que significa que
-um número equivalente de alocações deve existir para mapear o trabalho para as
+um número equivalente de allocations deve existir para mapear o trabalho para as
 máquinas clientes.
-As alocações são criadas pelos servidores Nomad como parte das decisões de
-agendamento tomadas durante uma avaliação.
+As allocations são criadas pelos servidores Nomad como parte das decisões de
+agendamento tomadas durante uma evaluation.
 
-## Regiões autoritativas e não autoritativas
+## Authoritative and non-authoritative regions
 
-A região autoritativa é a região em um cluster multirregional federado que
+A authoritative region é a região em um cluster multirregional federado que
 contém a fonte da verdade para entidades replicadas entre regiões, como tokens
-de ACL, políticas e funções, namespaces e pools de nós.
+de ACL, policies e roles, namespaces e node pools.
 
-Todas as outras regiões são consideradas regiões não autoritativas e replicam
-essas entidades extraindo-as da região autoritativa.
+Todas as outras regiões são consideradas non-authoritative regions e replicam
+essas entidades extraindo-as da authoritative region.
 
 ## Bin packing
 
@@ -58,88 +58,100 @@ trabalho a ser atribuído e executar tasks.
 O agente Nomad é um processo de longa duração que faz interface com os
 servidores.
 
-## Datacenters
+## Data centers
 
-Nomad models a datacenter as an abstract grouping of clients within a
-region. Nomad clients are not required to be in the same datacenter as the
-servers they are joined with, but do need to be in the same
-region. Datacenters provide a way to express fault tolerance among jobs as
-well as isolation of infrastructure.
+O Nomad modela um data center como um agrupamento abstrato de clientes dentro de
+uma região.
+Os clientes Nomad não precisam estar no mesmo data center que os servidores aos
+quais estão associados, mas precisam estar na mesma região.
+Os data centers fornecem uma maneira de expressar tolerância a falhas entre
+jobs, bem como isolamento da infraestrutura.
 
 ## Deployment
 
-Deployments are the mechanism by which Nomad rolls out changes to cluster state
-in a step-by-step fashion. Deployments are only available for Jobs with the type
-`service`. When an Evaluation is processed, the scheduler creates only the
-number of Allocations permitted by the [`update`][] block and the current state
-of the cluster. The Deployment is used to monitor the health of those
-Allocations and emit a new Evaluation for the next step of the update.
+Deployments são o mecanismo pelo qual o Nomad implementa alterações graduais no
+estado do cluster.
+Deployments estão disponíveis apenas para jobs com o tipo `service`.
+Quando uma evaluation é processada, o agendador cria apenas o número de
+allocations permitidas pelo bloco [`update`][] e pelo estado atual do cluster.
+O deployment é usado para monitorar a saúde dessas allocations e emitir uma nova
+evaluation para a próxima etapa da atualização.
 
 ## Driver
 
-A Driver represents the basic means of executing your **Tasks**.  Example
-Drivers include Docker, QEMU, Java, and static binaries.
+Um driver representa o meio básico de executar suas **tasks**.
+Exemplos de drivers incluem Docker, QEMU, Java e binários estáticos.
 
 ## Evaluation
 
-Evaluations are the mechanism by which Nomad makes scheduling decisions.  When
-either the _desired state_ (jobs) or _actual state_ (clients) changes, Nomad
-creates a new evaluation to determine if any actions must be taken. An
-evaluation may result in changes to allocations if necessary.
+Evaluations são o mecanismo pelo qual o Nomad toma decisões de agendamento.
+Quando o _estado desejado_ (jobs) ou o _estado real_ (clientes) muda, o Nomad
+cria uma nova evaluation para determinar se alguma ação deve ser tomada.
+Uma evaluation pode resultar em alterações em allocations, se necessário.
 
 ## Job
 
-A Job is a specification provided by users that declares a workload for
-Nomad. A Job is a form of _desired state_; the user is expressing that the
-job should be running, but not where it should be run. The responsibility of
-Nomad is to make sure the _actual state_ matches the user desired state. A
-Job is composed of one or more task groups.
+Um job é uma especificação fornecida pelas pessoas usuárias que declara uma
+carga de trabalho para o Nomad.
+Um job é uma forma de _estado desejado_; a pessoa usuária está expressando que o
+job deve estar em execução, mas não onde deve ser executado.
+A responsabilidade do Nomad é garantir que o _estado real_ corresponda ao estado
+desejado pela pessoa usuária.
+Um job é composto por um ou mais task groups.
 
 ## Node
 
-A more generic term used to refer to machines running Nomad agents in client
-mode. Despite being different concepts, you may find `node` being used
-interchangeably with [`client`](#client) in some materials and informal
-content.
+Um termo mais genérico usado para se referir a máquinas que executam agentes
+Nomad no modo client.
+Apesar de serem conceitos diferentes, você pode encontrar `node` sendo usado
+de forma intercambiável com [`client`](#cliente) em alguns materiais e conteúdos
+informais.
 
 ## Node Pool
 
-Node pools are used to group [nodes](#node) and can be used to restrict which
-[jobs](#job) are able to place [allocations](#allocation) in a given set of
-nodes. Example use cases for node pools include segmenting nodes by environment
-(development, staging, production), by department (engineering, finance,
-support), or by functionality (databases, ingress proxy, applications).
+Node pools são usados para agrupar [nodes](#node) e podem ser usados para
+restringir quais [jobs](#job) podem criar [allocations](#allocation) em um
+determinado conjunto de nodes.
+Exemplos de casos de uso para node pools incluem a segmentação de nodes por
+ambiente (desenvolvimento, staging, produção), por departamento (engenharia,
+finanças, suporte) ou por funcionalidade (bancos de dados, proxy de entrada,
+aplicações).
 
 ## Regions
 
-Nomad models infrastructure as regions and datacenters. A region will contain
-one or more datacenters. A set of servers joined together will represent a
-single region. Servers federate across regions to make Nomad globally aware.
+O Nomad modela a infraestrutura como regiões e data centers.
+Uma região conterá um ou mais data centers.
+Um conjunto de servidores unidos representará uma única região.
+Os servidores se federam entre regiões para tornar o Nomad globalmente ciente.
 
-In federated clusters one of the regions must be defined as the [authoritative
-region](#authoritative-and-non-authoritative-regions).
+Em clusters federados, uma das regiões deve ser definida como a
+[authoritative region](#authoritative-and-non-authoritative-regions).
 
 ## Server
 
-Nomad servers are the brains of the cluster. There is a cluster of servers per
-region and they manage all jobs and clients, run evaluations, and create task
-allocations.  The servers replicate data between each other and perform leader
-election to ensure high availability. More information about latency
-requirements for servers can be found in [Network
-Topology](/nomad/docs/deploy/production/requirements#network-topology).
+Os servidores Nomad são o cérebro do cluster.
+Há um cluster de servidores por região e eles gerenciam todos os jobs e
+clientes, executam evaluations e criam task allocations.
+Os servidores replicam dados entre si e realizam a eleição de líderes para
+garantir alta disponibilidade.
+Mais informações sobre os requisitos de latência para servidores podem ser
+encontradas em
+[Topologia de Rede](/nomad/docs/deploy/production/requirements#network-topology).
 
 ## Task
 
-A Task is the smallest unit of work in Nomad. Tasks are executed by drivers,
-which allow Nomad to be flexible in the types of tasks it supports. Tasks
-specify their driver, configuration for the driver, constraints, and resources
-required.
+Uma task é a menor unidade de trabalho no Nomad.
+As tasks são executadas por drivers, o que permite que o Nomad seja flexível nos
+tipos de tarefas que suporta.
+As tarefas especificam seu driver, configuração para o driver, restrições e
+recursos necessários.
 
 ## Task Group
 
-A Task Group is a set of tasks that must be run together. For example, a web
-server may require that a log shipping co-process is always running as well. A
-task group is the unit of scheduling, meaning the entire group must run on the
-same client node and cannot be split.
+Um task group é um conjunto de tasks que devem ser executadas juntas.
+Por exemplo, um servidor web pode exigir que um coprocesso de envio de logs
+esteja sempre em execução.
+Um task group é a unidade de agendamento, o que significa que todo o grupo deve
+ser executado no mesmo nó cliente e não pode ser dividido.
 
 [`update`]: /nomad/docs/job-specification/update

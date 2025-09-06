@@ -377,10 +377,10 @@ com suas próprias vantagens e desvantagens.
 
 #### Opção `none`
 
-No modo `none`, o agendador Nomad aproveita a apatia de tasks sem preferência de
+No modo `none`, o agendador Nomad aproveita a apatia de jobs sem preferência de
 afinidade NUMA para ajudar a reduzir a fragmentação do núcleo dentro dos nós
 NUMA.
-Ele faz isso agrupando a requisição de núcleo dessas tasks nos nós NUMA com o
+Ele faz isso agrupando a requisição de núcleo desses jobs nos nós NUMA com o
 menor número de núcleos não utilizados disponíveis.
 
 O modo `none` é o modo padrão se o bloco `numa` não for especificado.
@@ -428,8 +428,8 @@ resources {
 
 ### Opções de `devices`
 
-`devices` é uma lista opcional de dispositivos que devem ser alocados no nó NUMA
-junto com núcleos de CPU alocados.
+`devices` é uma lista opcional de dispositivos que devem ser colocados no nó
+NUMA junto com núcleos de CPU alocados.
 
 O diagrama a seguir mostra como um conjunto de dispositivos pode ser
 correlacionado à CPU e à memória.

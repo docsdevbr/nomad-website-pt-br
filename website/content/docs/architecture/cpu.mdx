@@ -6,62 +6,74 @@
 # The original work was translated from English into Brazilian Portuguese.
 # https://github.com/hashicorp/nomad/blob/main/LICENSE
 
+source_url: https://github.com/hashicorp/nomad/blob/main/website/content/docs/architecture/cpu.mdx
+revision: 53b083b8c5e09c8f12ae6a9db9fe6f88e75c2d12
+status: ready
+
 layout: docs
-page_title: How Nomad Uses CPU
-description: Learn how Nomad discovers and uses CPU resources on nodes in order to place and run workloads. Nomad Enterprise can use non-uniform memory access (NUMA) scheduling, which is optimized for the NUMA topology of a client node.
+page_title: Como o Nomad utiliza a CPU
+description: |-
+  Aprenda como o Nomad descobre e utiliza recursos de CPU em nós para alocar e
+  executar cargas de trabalho.
+  O Nomad Enterprise pode usar o agendamento de acesso não uniforme à memória
+  (NUMA), otimizado para a topologia NUMA de um nó cliente.
 ---
 
-# How Nomad Uses CPUs
+# Como o Nomad utiliza CPUs
 
-This page provides conceptual information on how Nomad discovers and uses CPU resources on nodes in order to place and run workloads.
+Esta página fornece informações conceituais sobre como o Nomad descobre e
+utiliza recursos de CPU em nós para alocar e executar cargas de trabalho.
 
-Every Nomad node has a Central Processing Unit (CPU) providing the computational
-power needed for running operating system processes. Nomad uses the CPU to
-run tasks defined by the Nomad job submitter. For Nomad to know which nodes
-have sufficient capacity for running a given task, each node in the cluster
-is fingerprinted to gather information about the performance characteristics
-of its CPU. The two metrics associated with each Nomad node with regard to
-CPU performance are its bandwidth (how much it can _compute_) and the number
-of cores.
+Cada nó Nomad possui uma Unidade Central de Processamento (CPU) que fornece o
+poder computacional necessário para executar os processos do sistema
+operacional.
+O Nomad utiliza a CPU para executar tasks definidas pelo submissor de jobs do
+Nomad.
+Para que o Nomad saiba quais nós têm capacidade suficiente para executar uma
+determinada task, cada nó no cluster é identificado por impressão digital para
+coletar informações sobre as características de desempenho de sua CPU.
+As duas métricas associadas a cada nó Nomad em relação ao desempenho da CPU são
+sua largura de banda (quanto ele pode _computar_) e o número de núcleos.
 
-Modern CPUs may contain heterogeneous core types. Apple introduced the M1 CPU
-in 2020 which contains both _performance_ (P-Core) and _efficiency_ (E-Core)
-types. Each core type operates at a different base frequency. Intel introduced
-a similar topology in its Raptor Lake chips in 2022. When fingerprinting
-the characteristics of a CPU Nomad is capable of taking these advanced CPU
-topologies into account.
+CPUs modernas podem conter tipos de núcleo heterogêneos.
+A Apple lançou a CPU M1 em 2020, que contém os tipos de _desempenho_ (núcleo P) e
+_eficiência_ (núcleo E).
+Cada tipo de núcleo opera em uma frequência base diferente.
+A Intel introduziu uma topologia semelhante em seus chips Raptor Lake em 2022.
+Ao identificar as características de uma CPU, o Nomad é capaz de levar em
+consideração essas topologias avançadas de CPU.
 
-[![PE Cores](/img/nomad-pe-cores.png)](/img/nomad-pe-cores.png)
+[![Núcleos PE](/img/nomad-pe-cores.png)](/img/nomad-pe-cores.png)
 
-## Calculating CPU resources
+## Calculando os recursos da CPU
 
-The total CPU bandwidth of a Nomad node is the sum of the product between the
-frequency of each core type and the total number of cores of that type in the
+A largura de banda total da CPU de um nó Nomad é a soma do produto entre a
+frequência de cada tipo de núcleo e o número total de núcleos desse tipo na
 CPU.
 
 ```
-bandwidth = (p_cores * p_frequency) + (e_cores * e_frequency)
+largura_de_banda = (nucleos_p * frequencia_p) + (nucleos_e * frequencia_e)
 ```
 
-The total number of cores is computed by summing the number of P-Cores and the
-number of E-Cores.
+O número total de núcleos é calculado somando o número de núcleos P e o número
+de núcleos E.
 
 ```
-cores = p_cores + e_cores
+nucleos = nucleos_p + nucleos_e
 ```
 
-Nomad does not distinguish between logical and physical CPU cores. One of the
-defining differences between the P-Core and E-Core types is that the E-Cores
-do not support hyperthreading, whereas P-Cores do. As such a single physical
-P-Core is presented as 2 logical cores, and a single E-Core is presented as 1
-logical core.
+O Nomad não distingue entre núcleos de CPU lógicos e físicos.
+Uma das diferenças que definem os tipos de núcleo P e E é que os núcleos E não
+suportam hyperthreading, enquanto os núcleos P suportam.
+Assim, um único núcleo P físico é apresentado como 2 núcleos lógicos, e um único
+núcleo E é apresentado como 1 núcleo lógico.
 
-The example below is from a Nomad node with an Intel i9-13900 CPU. It is made
-up of mixed core types, with a P-Core base frequency of 2 GHz and an E-Core
-base frequency of 1.5 GHz.
+O exemplo abaixo é de um nó Nomad com uma CPU Intel i9-13900.
+Ele é composto por tipos de núcleo mistos, com uma frequência base do núcleo P
+de 2 GHz e uma frequência base do núcleo E de 1,5 GHz.
 
-These characteristics are reflected in the `cpu.frequency.performance` and
-`cpu.frequency.efficiency` node attributes respectively.
+Essas características são refletidas nos atributos de nó
+`cpu.frequency.performance` e `cpu.frequency.efficiency`, respectivamente.
 
 ```text
 cpu.arch                        = amd64
@@ -76,15 +88,16 @@ cpu.totalcompute                = 56000
 cpu.usablecompute               = 56000
 ```
 
-## Reserving CPU resources
+## Reservando recursos de CPU
 
-In the fingerprinted node attributes, `cpu.totalcompute` indicates the total
-amount of CPU bandwidth the processor is capable of delivering. In some cases it
-may be beneficial to reserve some amount of a node's CPU resources for use by
-the operating system and other non-Nomad processes. This can be done in client
-configuration.
+Nos atributos de nó identificados, `cpu.totalcompute` indica a quantidade total
+de largura de banda da CPU que o processador é capaz de fornecer.
+Em alguns casos, pode ser benéfico reservar uma certa quantidade de recursos de
+CPU de um nó para uso pelo sistema operacional e outros processos não Nomad.
+Isso pode ser feito na configuração do cliente.
 
-The amount of reserved CPU can be specified in bandwidth via `cpu`.
+A quantidade de CPU reservada pode ser especificada em largura de banda via
+`cpu`:
 
 ```hcl
 client {
@@ -94,8 +107,9 @@ client {
 }
 ```
 
-Or as a specific set of `cores` on which to disallow the scheduling of Nomad
-tasks. This capability is available on Linux systems only.
+Ou como um conjunto específico de `cores` nos quais é proibido o agendamento
+de tasks do Nomad.
+Este recurso está disponível apenas em sistemas Linux.
 
 ```hcl
 client {
@@ -105,17 +119,19 @@ client {
 }
 ```
 
-When the CPU is constrained by one of the above configurations, the node
-attribute `cpu.usablecompute` indicates the total amount of CPU bandwidth
-available for scheduling of Nomad tasks.
+Quando a CPU é limitada por uma das configurações acima, o atributo
+`cpu.usablecompute` do nó indica a quantidade total de largura de banda da CPU
+disponível para o agendamento de tasks do Nomad.
 
-## Allocating CPU Resources
+## Alocando recursos de CPU
 
-When scheduling jobs, a Task must specify how much CPU resource should be
-allocated on its behalf. This can be done in terms of bandwidth in MHz with the
-`cpu` attribute. On Linux under cgroups v1, Nomad maps this MHz value directly
-into a [cpu.share][]. On Linux under cgroups v2, Nomad converts the MHz value to
-a [cpu.weight][] proportionally the same as the cgroups v1 `cpu.share`.
+Ao agendar jobs, uma task deve especificar quanto recurso de CPU deve ser
+alocado em seu nome.
+Isso pode ser feito em termos de largura de banda em MHz com o atributo `cpu`.
+No Linux com cgroups v1, o Nomad mapeia esse valor em MHz diretamente para
+[cpu.share][].
+No Linux com cgroups v2, o Nomad converte o valor em MHz para um [cpu.weight][]
+proporcionalmente igual ao `cpu.share` do cgroups v1.
 
 ```hcl
 task {
@@ -125,22 +141,25 @@ task {
 }
 ```
 
-Note that the isolation mechanism around CPU resources is dependent on each task
-driver and its configuration. The standard behavior is that Nomad ensures a task
-has access to _at least_ as much of its allocated CPU bandwidth. In which case
-if a node has idle CPU capacity, a task may use additional CPU resources.  Some
-task drivers enable limiting a task to use only the amount of bandwidth
-allocated to the task, described in the [CPU Hard Limits](#cpu-hard-limits)
-section below.
+Observe que o mecanismo de isolamento em torno dos recursos da CPU depende de
+cada driver de task e de sua configuração.
+O comportamento padrão é que o Nomad garanta que uma task tenha acesso a _pelo
+menos_ a mesma quantidade de largura de banda alocada da CPU.
+Nesse caso, se um nó tiver capacidade de CPU ociosa, uma task poderá usar
+recursos adicionais da CPU.
+Alguns drivers de task permitem limitar uma task para usar apenas a quantidade
+de largura de banda alocada a ela, descrita na seção
+[Limites Rígidos da CPU](#limites-rígidos-da-cpu) abaixo.
 
-### Relative CPU shares/weights on Linux
+### Compartilhamentos/pesos relativos da CPU no Linux
 
-Linux cgroups are hierarchical, and the `cpu.share`/`cpu.weight` values reflect
-relative weights within a given subtree. Nomad creates its own cgroup subtree
-(`nomad.slice`) on startup, and all `cpu.share`/`cpu.weight` values that Nomad
-writes are relative between processes within that slice. The `nomad.slice`
-subtree is itself relative to another subtree on the host. For example, a host
-running systemd might have the following slices:
+Os cgroups do Linux são hierárquicos e os valores `cpu.share`/`cpu.weight`
+refletem os pesos relativos dentro de uma determinada subárvore.
+O Nomad cria sua própria subárvore de cgroups(`nomad.slice`) na inicialização, e
+todos os valores `cpu.share`/`cpu.weight` que o Nomad grava são relativos entre
+os processos dentro desse slice.
+A subárvore `nomad.slice` é relativa a outra subárvore no host.
+Por exemplo, um host executando systemd pode ter os seguintes slices:
 
 ```
 /sys/fs/cgroup
@@ -158,19 +177,22 @@ running systemd might have the following slices:
     └── (various user services, etc.)
 ```
 
-If the task `912dcc05` has `resources.cpu = 1024` and tasks `247e706a` and
-`586c0c58` have `resources.cpu = 512`, then `912dcc05` will get 50% of the CPU
-resources available to the `nomad.slice` and tasks `247e706a` and `586c0c58`
-will get 25% each. (The `reserve.slice` and `share.slice` are passthrough for
-cpu shares here.) But together they'll get 33% of the total host's CPU resources
-unless the `nomad.slice`, `system.slice`, or `user-1000.slice` have something
-other than the default 1024 shares. The 1024 value is only meaningful within the
-context of the Nomad slice.
+Se a task `912dcc05` tiver `resources.cpu = 1024` e as tasks `247e706a` e
+`586c0c58` tiverem `resources.cpu = 512`, então `912dcc05` receberá 50% dos
+recursos de CPU disponíveis para `nomad.slice` e as tasks `247e706a` e
+`586c0c58` receberão 25% cada.
+(`reserve.slice` e `share.slice` são passagens para compartilhamentos de CPU
+aqui.)
+Mas, juntas, elas receberão 33% dos recursos totais de CPU do host, a menos que
+`nomad.slice`, `system.slice` ou `user-1000.slice` tenham algo diferente dos
+1024 compartilhamentos padrão.
+O valor 1024 só é significativo dentro do contexto do slice do Nomad.
 
-### Allocating cores
+### Alocando núcleos
 
-On Linux systems, Nomad supports reserving whole CPU cores specifically for a
-task. No task will be allowed to run on a CPU core reserved for another task.
+Em sistemas Linux, o Nomad suporta a reserva de núcleos inteiros de CPU
+especificamente para uma task.
+Nenhuma task poderá ser executada em um núcleo de CPU reservado para outra task.
 
 ```hcl
 task {
@@ -180,33 +202,35 @@ task {
 }
 ```
 
-We recommend using `resources.cores` for tasks that require high CPU performance
-to give those tasks exclusive access to CPU bandwidth. Sidecar tasks in the same
-allocations can use `resources.cpu` to get a proportional share of the remaining
-CPU on the node.
+Recomendamos o uso de `resources.cores` para tasks que exigem alto desempenho da
+CPU para dar a essas tasks acesso exclusivo à largura de banda da CPU.
+Tarefas sidecar nas mesmas allocations podem usar `resources.cpu` para obter uma
+parte proporcional da CPU restante no nó.
 
-Nomad Enterprise supports NUMA aware scheduling, which enables operators to
-more finely control which CPU cores may be reserved for tasks.
+O Nomad Enterprise suporta agendamento com reconhecimento de NUMA, o que permite
+às pessoas operadoras controlar com mais precisão quais núcleos de CPU podem ser
+reservados para tasks.
 
-### CPU hard limits
+### Limites rígidos da CPU
 
-Some task drivers support the configuration option `cpu_hard_limit`. If enabled
-this option restricts tasks from bursting above their CPU limit even when there
-is idle capacity on the node. The tradeoff is consistency versus utilization.
-A task with too few CPU resources may operate fine until another task is placed
-on the node causing a reduction in available CPU bandwidth, which could cause
-disruption for the underprovisioned task.
+Alguns drivers de task suportam a opção de configuração `cpu_hard_limit`.
+Se habilitada, esta opção impede que as tasks ultrapassem o limite da CPU, mesmo
+quando há capacidade ociosa no nó.
+A compensação é consistência versus utilização.
+Uma task com poucos recursos de CPU pode operar normalmente até que outra task
+seja colocada no nó, causando uma redução na largura de banda da CPU disponível,
+o que pode causar interrupção para a task subprovisionada.
 
-### CPU environment variables
+### Variáveis de ambiente da CPU
 
-To help tasks understand the resources available to them, Nomad sets the
-following environment variables in their runtime environment.
+Para ajudar as tasks a entender os recursos disponíveis, o Nomad define as
+seguintes variáveis de ambiente em seu ambiente de execução.
 
-
-- `NOMAD_CPU_LIMIT` - The amount of CPU bandwidth allocated on behalf of the
-  task.
-- `NOMAD_CPU_CORES` - The set of cores in [cpuset][] notation reserved for the
-  task. This value is only set if `resources.cores` is configured.
+- `NOMAD_CPU_LIMIT` - A quantidade de largura de banda da CPU alocada em nome da
+  task;
+- `NOMAD_CPU_CORES` - O conjunto de núcleos na notação [cpuset][] reservados
+  para a task.
+  Este valor só é definido se `resources.cores` estiver configurado.
 
 ```sh
 NOMAD_CPU_CORES=3-5
@@ -215,47 +239,53 @@ NOMAD_CPU_LIMIT=9000
 
 ## NUMA
 
-Nomad clients are commonly provisioned on real hardware in an on-premise
-environment or in the cloud on large `.metal` instance types. In either case, it
-is likely the underlying server is designed around a [non-uniform memory access (NUMA) topology][numa_wiki].
-Servers that contain multiple CPU sockets or multiple RAM banks per CPU socket
-are characterized by the non-uniform access times involved in accessing system
-memory.
+Clientes Nomad são comumente provisionados em hardware real em um ambiente
+on-premise ou na nuvem em grandes instâncias `.metal`.
+Em ambos os casos, é provável que o servidor subjacente seja projetado em torno
+de uma [topologia de acesso não uniforme à memória (NUMA)][numa_wiki].
+Servidores que contêm múltiplos soquetes de CPU ou múltiplos bancos de RAM por
+soquete de CPU são caracterizados pelos tempos de acesso não uniformes
+envolvidos no acesso à memória do sistema.
 
 [![NUMA](/img/nomad-numa.png)](/img/nomad-numa.png)
 
-The simplified example machine above has the following topology:
-- 2 physical CPU sockets
-- 4 system memory banks, 2 per socket
-- 8 physical cpu cores (4 per socket)
-- 2 logical cpu cores per physical core
-- 4 PCI devices, 1 per memory bank
+A máquina de exemplo simplificada acima tem a seguinte topologia:
 
-### Optimizing performance
+- 2 soquetes físicos de CPU
+- 4 bancos de memória do sistema, 2 por soquete
+- 8 núcleos físicos de CPU (4 por soquete)
+- 2 núcleos lógicos de CPU por núcleo físico
+- 4 dispositivos PCI, 1 por banco de memória
 
-Operating system processes take longer to access memory across a NUMA boundary.
+### Otimizando o desempenho
 
-Using the example above if a task is scheduled on Core 0, accessing memory in
-Mem 1 might take 20% longer than accessing memory in Mem 0, and accessing memory
-in Mem 2 might take 300% longer.
+Processos do sistema operacional levam mais tempo para acessar a memória através
+de uma fronteira NUMA.
 
-The extreme differences are due to various physical hardware limitations. A core
-accessing memory in its own NUMA node is optimal. Programs which perform a high
-throughput of reads or writes to/from system memory will have their performance
-substantially hindered by not optimizing their spatial locality with regard to
-the systems NUMA topology.
+Usando o exemplo acima, se uma task for agendada no núcleo `core 0`, o acesso à
+memória em `mem 1` pode levar 20% mais tempo do que o acesso à memória em
+`mem 0`, e o acesso à memória em `mem 2` pode levar 300% mais tempo.
 
-### SLIT tables
+As diferenças extremas se devem a várias limitações físicas de hardware.
+Um núcleo acessando a memória em seu próprio nó NUMA é o ideal.
+Programas que realizam uma alta taxa de leitura ou gravação de/para a memória do
+sistema terão seu desempenho substancialmente prejudicado por não otimizarem sua
+localização espacial em relação à topologia NUMA do sistema.
 
-Modern machines will define System Locality Distance Information (SLIT) tables
-in their firmware. These tables are understood and made referenceable by the
-Linux kernel. There are two key pieces of information provided by SLIT tables:
-- Which CPU cores belong to which NUMA nodes
-- The penalty incurred for accessing each NUMA node from a core in every other
-NUMA node
+### Tabelas SLIT
 
-The `lscpu` command can be used to describe the Core associativity on a machine.
-For example on an `r6a.metal` EC2 instance:
+Máquinas modernas definirão tabelas de Informações de Distância de Localidade do
+Sistema (SLIT) em seu firmware.
+Essas tabelas são compreendidas e referenciáveis pelo kernel Linux.
+Há duas informações principais fornecidas pelas tabelas SLIT:
+
+- Quais núcleos de CPU pertencem a quais nós NUMA;
+- A penalidade incorrida para acessar cada nó NUMA a partir de um núcleo em cada
+  outro nó NUMA.
+
+O comando `lscpu` pode ser usado para descrever a associatividade do núcleo em
+uma máquina.
+Por exemplo, em uma instância EC2 `r6a.metal`:
 
 ```shell-session
 $ lscpu | grep NUMA
@@ -266,7 +296,7 @@ NUMA node2 CPU(s):      48-71,144-167
 NUMA node3 CPU(s):      72-95,168-191
 ```
 
-And the associated performance degradations are available via `numactl`:
+E as degradações de desempenho associadas estão disponíveis via `numactl`:
 
 ```shell-session
 $ numactl -H
@@ -280,17 +310,20 @@ node   0   1   2   3
   3:  32  32  12  10
 ```
 
-These SLIT table node distance values are presented as approximate relative
-ratios. The value of 10 represents an optimal situation where a memory access
-is occurring from a CPU that is part of the same NUMA node. A value of 20 would
-indicate a 200% performance degradation, 30 for 300%, etc.
+Esses valores de distância dos nós da tabela SLIT são apresentados como
+proporções relativas aproximadas.
+O valor 10 representa uma situação ideal em que um acesso à memória ocorre a
+partir de uma CPU que faz parte do mesmo nó NUMA.
+Um valor 20 indicaria uma degradação de desempenho de 200%, 30, 300%, e assim
+por diante.
 
-### Node Attributes
+### Atributos do nó
 
-Nomad clients will fingerprint the machine's NUMA topology and export the
-core associativity as node attributes. This data can provide a Nomad operator
-a better understanding of when it might be useful to make use of NUMA aware
-scheduling for certain workloads.
+Os clientes Nomad identificarão a topologia NUMA da máquina e exportarão a
+associatividade do núcleo como atributos do nó.
+Esses dados podem fornecer à pessoa operadora do Nomad uma melhor compreensão de
+quando pode ser útil usar o agendamento com reconhecimento de NUMA para
+determinadas cargas de trabalho.
 
 ```
 numa.node.count       = 4
@@ -300,16 +333,21 @@ numa.node2.cores      = 48-71,144-167
 numa.node3.cores      = 72-95,168-191
 ```
 
-## NUMA aware scheduling <EnterpriseAlert inline />
+## Agendamento com reconhecimento de NUMA <EnterpriseAlert inline />
 
-Nomad Enterprise is capable of scheduling tasks in a way that is optimized for
-the NUMA topology of a client node. Nomad is able to correlate CPU cores with
-memory nodes and assign tasks to run on specific CPU cores so as to minimize any
-cross-memory node access patterns. Additionally, Nomad is able to correlate
-devices to memory nodes and enable NUMA-aware scheduling to take device
-associativity into account when making scheduling decisions.
+O Nomad Enterprise é capaz de agendar tasks de forma otimizada para a topologia
+NUMA de um nó cliente.
+O Nomad é capaz de correlacionar núcleos de CPU com nós de memória e atribuir
+tasks para execução em núcleos de CPU específicos, a fim de minimizar quaisquer
+padrões de acesso entre nós de memória.
+Além disso, o Nomad é capaz de correlacionar dispositivos a nós de memória e
+permitir que o agendamento com reconhecimento de NUMA leve em consideração a
+associatividade dos dispositivos ao tomar decisões de agendamento.
 
-A task may specify a `numa` block indicating its NUMA optimization preference. This example allocates a `1080ti` GPU and ensures it is on the same NUMA node as the 4 CPU cores reserved for the task.
+Uma task pode especificar um bloco `numa` indicando sua preferência de
+otimização NUMA.
+Este exemplo aloca uma GPU `1080ti` e garante que ela esteja no mesmo nó NUMA
+que os 4 núcleos de CPU reservados para a task.
 
 ```hcl
 task {
@@ -331,19 +369,21 @@ task {
 }
 ```
 
-### `affinity` options
+### Opções de `affinity`
 
-This is a required field. There are three supported affinity options:
-`none`, `prefer`, and `require`, each with their own advantages and tradeoffs.
+Este campo é obrigatório.
+Há três opções de afinidade suportadas: `none`, `prefer` e `require`, cada uma
+com suas próprias vantagens e desvantagens.
 
-#### option `none`
+#### Opção `none`
 
-In the `none` mode, the Nomad scheduler leverages the apathy of jobs without
-preference of NUMA affinity to help reduce core fragmentation within NUMA nodes.
-It does so by bin-packing the core request of these jobs onto the NUMA nodes
-with the fewest unused cores available.
+No modo `none`, o agendador Nomad aproveita a apatia de tasks sem preferência de
+afinidade NUMA para ajudar a reduzir a fragmentação do núcleo dentro dos nós
+NUMA.
+Ele faz isso agrupando a requisição de núcleo dessas tasks nos nós NUMA com o
+menor número de núcleos não utilizados disponíveis.
 
-The `none` mode is the default mode if the `numa` block is not specified.
+O modo `none` é o modo padrão se o bloco `numa` não for especificado.
 
 ```hcl
 resources {
@@ -354,11 +394,11 @@ resources {
 }
 ```
 
-#### option `prefer`
+#### Opção `prefer`
 
-In the `prefer` mode, the Nomad scheduler uses the hardware topology of a node
-to calculate an optimized selection of available cores, but does not limit
-those cores to come from a single NUMA node.
+No modo `prefer`, o agendador Nomad usa a topologia de hardware de um nó para
+calcular uma seleção otimizada de núcleos disponíveis, mas não limita esses
+núcleos a virem de um único nó NUMA.
 
 ```hcl
 resources {
@@ -369,12 +409,13 @@ resources {
 }
 ```
 
-#### option `require`
+#### Opção `require`
 
-In the `require` mode, the Nomad scheduler uses the topology of each potential
-client to find a set of available CPU cores that belong to the same NUMA node.
-If no such set of cores can be found, that node is marked exhausted for the
-resource of `numa-cores`.
+No modo `require`, o agendador Nomad usa a topologia de cada cliente em
+potencial para encontrar um conjunto de núcleos de CPU disponíveis que pertençam
+ao mesmo nó NUMA.
+Se nenhum conjunto de núcleos for encontrado, esse nó será marcado como esgotado
+para o recurso `numa-cores`.
 
 ```hcl
 resources {
@@ -385,16 +426,17 @@ resources {
 }
 ```
 
-### `devices` options
+### Opções de `devices`
 
-`devices` is an optional list of devices that must be colocated on the NUMA node
-along with allocated CPU cores.
+`devices` é uma lista opcional de dispositivos que devem ser alocados no nó NUMA
+junto com núcleos de CPU alocados.
 
-The following diagram shows how a set of devices can be correlated to CPU and memory.
+O diagrama a seguir mostra como um conjunto de dispositivos pode ser
+correlacionado à CPU e à memória.
 
-[![How a set of devices can be correlated to CPU and memory](/img/nomad-devices-correlate-cpu-memory.png)](/img/nomad-devices-correlate-cpu-memory.png)
+[![Como um conjunto de dispositivos pode ser correlacionado à CPU e à memória](/img/nomad-devices-correlate-cpu-memory.png)](/img/nomad-devices-correlate-cpu-memory.png)
 
-This example declares three devices and configures two in the `numa` block.
+Este exemplo declara três dispositivos e configura dois no bloco `numa`.
 
 ```hcl
 task {
@@ -423,13 +465,13 @@ task {
 }
 ```
 
-## Virtual CPU fingerprinting
+## Identificação da CPU virtual
 
-When running on a virtualized host such as Amazon EC2 Nomad makes use of the
-`dmidecode` tool to detect CPU performance data. Some Linux distributions will
-require installing the `dmidecode` package manually.
+Ao ser executado em um host virtualizado, como o Amazon EC2, o Nomad utiliza a
+ferramenta `dmidecode` para detectar dados de desempenho da CPU.
+Algumas distribuições Linux exigirão a instalação manual do pacote `dmidecode`.
 
 [cpuset]: https://www.kernel.org/doc/html/latest/admin-guide/cgroup-v1/cpusets.html
 [cpu.share]: https://www.redhat.com/sysadmin/cgroups-part-two
 [cpu.weight]: https://www.kernel.org/doc/html/latest/admin-guide/cgroup-v2.html#weights
-[numa_wiki]: https://en.wikipedia.org/wiki/Non-uniform_memory_access
+[numa_wiki]: https://pt.wikipedia.org/wiki/Acesso_n%C3%A3o_uniforme_a_mem%C3%B3ria

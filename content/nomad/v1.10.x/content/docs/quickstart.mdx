@@ -1,0 +1,95 @@
+---
+# Copyright (c) 2024 HashiCorp, Inc.
+# Nomad and the Nomad logo are trademarks of HashiCorp.
+#
+# Documentation licensed under the Business Source License, Version 1.1.
+# The original work was translated from English into Brazilian Portuguese.
+# https://github.com/hashicorp/nomad/blob/-/LICENSE
+
+source_url: https://github.com/hashicorp/nomad/blob/main/website/content/docs/quickstart.mdx
+revision: 5dc7e7fe2583030721dace2da6fbcdf64939d534
+status: ready
+
+layout: docs
+page_title: Início rápido do Nomad
+description: >-
+  A página de início rápido do Nomad contém links para recursos que mostram como
+  começar a usar o Nomad localmente ou em um ambiente de nuvem.
+---
+
+# Início rápido do Nomad
+
+Estas instalações foram projetadas para você começar a usar o Nomad e devem
+ser usadas apenas para fins experimentais.
+Se você deseja instalar o Nomad em produção, consulte o
+[Guia de instalação em produção](/nomad/docs/deploy/production).
+
+## Tutoriais do Nomad
+
+Recomendamos estes tutoriais, que provisionam um cluster Nomad para você.
+
+- [Introdução][]: Comece a usar o Nomad aprendendo sobre agendamento,
+  configurando um cluster e implantando um job de exemplo.
+  Crie um cluster Nomad em sua máquina local ou em um ambiente de nuvem AWS,
+  Azure ou Google Cloud Platform (GCP).
+  Esta série de tutoriais possui um repositório de código associado para que
+  você possa revisar os scripts de provisionamento do Terraform e as
+  especificações do job do Nomad.
+- [Configuração do cluster][]: Provisione um cluster Nomad na AWS, Azure ou GCP.
+  Habilite o Consul e as listas de controle de acesso (ACLs).
+  Esta série de tutoriais possui um repositório de código associado para que
+  você possa revisar os scripts de provisionamento do Terraform.
+
+## Instalação na nuvem
+
+O repositório Nomad contém guias e scripts Terraform para provisionar um
+ambiente sandbox do Nomad na AWS, Azure ou GCP com Consul e Vault.
+Você pode explorar o Nomad e suas integrações com a stack HashiCorp.
+
+- [Provisione um cluster Nomad na AWS][]
+- [Provisione um cluster Nomad na Azure][]
+- [Provisione um cluster Nomad na GCP][]
+
+## Instalação local
+
+Use um dos seguintes métodos para executar um ambiente sandbox local do Nomad:
+
+- Instale um binário
+
+  Consulte o [Guia de instalação do Nomad][installing-binary] para instalar o
+  binário da versão mais recente do Nomad.
+
+  Execute o Nomad com o [comando][agent-dev] `sudo nomad agent -dev`, que inicia
+  o agente Nomad em modo de desenvolvimento.
+
+  Se você estiver usando o Docker Desktop para Windows ou MacOS, consulte
+  [Como conectar à minha rede host ao usar o Docker Desktop (Windows e MacOS)][faq-win-mac]
+  para obter instruções sobre como vincular o Nomad a uma interface de rede sem
+  loopback.
+
+- Use Vagrant e VirtualBox
+
+  Esta opção requer hardware AMD.
+
+  O repositório Nomad contém um arquivo Vagrantfile.
+  Consulte a seção [Developing with Vagrant][vagrant] do arquivo
+  [Nomad Codebase Documentation][compile-source] para obter instruções.
+
+- Compile e execute a partir do código-fonte
+
+  Esta opção requer experiência em engenharia de software e uma estação de
+  trabalho configurada para desenvolvimento em Go, Node e Docker.
+
+  Consulte o arquivo [Nomad Codebase Documentation][compile-source] do
+  repositório do Nomad para obter detalhes.
+
+[faq-win-mac]: /nomad/docs/faq#q-how-to-connect-to-my-host-network-when-using-docker-desktop-windows-and-macos
+[installing-binary]: /nomad/docs/deploy
+[Introdução]: /nomad/tutorials/get-started
+[Configuração do cluster]: /nomad/tutorials/cluster-setup
+[Provisione um cluster Nomad na AWS]: https://github.com/hashicorp/nomad/blob/main/terraform/aws/README.md
+[Provisione um cluster Nomad na Azure]: https://github.com/hashicorp/nomad/blob/main/terraform/azure/README.md
+[Provisione um cluster Nomad na GCP]: https://github.com/hashicorp/nomad/blob/main/terraform/gcp/README.md
+[agent-dev]: /nomad/commands/agent#dev
+[vagrant]: https://github.com/hashicorp/nomad/blob/main/contributing/README.md#developing-with-vagrant
+[compile-source]: https://github.com/hashicorp/nomad/blob/main/contributing/README.md

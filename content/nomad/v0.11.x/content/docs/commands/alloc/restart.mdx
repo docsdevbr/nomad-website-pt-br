@@ -1,0 +1,48 @@
+---
+# Copyright (c) 2024 HashiCorp, Inc.
+# Nomad and the Nomad logo are trademarks of HashiCorp.
+#
+# Documentation licensed under the Business Source License, Version 1.1.
+# The original work was translated from English into Brazilian Portuguese.
+# https://github.com/hashicorp/nomad/blob/-/LICENSE
+
+layout: docs
+page_title: 'Commands: alloc restart'
+sidebar_title: restart
+description: |
+  Restart a running allocation or task
+---
+
+# Command: alloc restart
+
+The `alloc restart` command allows a user to perform an in place restart of an
+an entire allocation or individual task.
+
+## Usage
+
+```plaintext
+nomad alloc restart [options] <allocation> <task>
+```
+
+This command accepts a single allocation ID and a task name. The task name must
+be part of the allocation and the task must be currently running. The task name
+is optional and if omitted every task in the allocation will be restarted.
+
+## General Options
+
+@include 'general_options.mdx'
+
+## Restart Options
+
+- `-verbose`: Display verbose output.
+
+## Examples
+
+```shell-session
+$ nomad alloc restart eb17e557
+
+$ nomad alloc restart eb17e557 foo
+Could not find task named: foo, found:
+* test
+<blocking>
+```

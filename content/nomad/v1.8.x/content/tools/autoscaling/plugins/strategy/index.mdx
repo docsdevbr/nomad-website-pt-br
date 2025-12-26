@@ -1,0 +1,20 @@
+---
+# Copyright (c) 2024 HashiCorp, Inc.
+# Nomad and the Nomad logo are trademarks of HashiCorp.
+#
+# Documentation licensed under the Business Source License, Version 1.1.
+# The original work was translated from English into Brazilian Portuguese.
+# https://github.com/hashicorp/nomad/blob/-/LICENSE
+
+layout: docs
+page_title: 'Autoscaling Plugins: Strategy'
+description: Strategy plugins compare the current state of the system against the desired state.
+---
+
+# Strategy Plugins
+
+Strategy plugins compare the current state of the system against the desired state
+defined by the operator in the scaling policy and generate an action that will
+bring the system closer to the desired state. In practical terms, strategies
+receive the current value and a metric value for a resource and output what the
+new value should be.

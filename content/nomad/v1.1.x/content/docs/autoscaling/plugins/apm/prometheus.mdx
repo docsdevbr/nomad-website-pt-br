@@ -1,0 +1,44 @@
+---
+# Copyright (c) 2024 HashiCorp, Inc.
+# Nomad and the Nomad logo are trademarks of HashiCorp.
+#
+# Documentation licensed under the Business Source License, Version 1.1.
+# The original work was translated from English into Brazilian Portuguese.
+# https://github.com/hashicorp/nomad/blob/-/LICENSE
+
+layout: docs
+page_title: 'Autoscaling Plugins: Prometheus'
+description: The "prometheus" APM plugin queries a Prometheus server.
+---
+
+# Prometheus APM Plugin
+
+The `prometheus` APM plugin allows querying for metrics stored in a
+[Prometheus][prometheus_io] server.
+
+## Agent Configuration Options
+
+```hcl
+apm "prometheus" {
+  driver = "prometheus"
+
+  config = {
+    address = "http://prometheus.my.endpoint.io:9090"
+  }
+}
+```
+
+- `address` `(string: "http://127.0.0.1:9090")` - The address of the Prometheus
+  endpoint used to perform queries.
+
+## Policy Configuration Options
+
+```hcl
+check {
+  source = "prometheus"
+  query  = "avg((haproxy_server_current_sessions{backend=\"http_back\"}))"
+  # ...
+}
+```
+
+[prometheus_io]: https://prometheus.io/

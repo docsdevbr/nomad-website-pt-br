@@ -1,0 +1,40 @@
+---
+# Copyright (c) 2024 HashiCorp, Inc.
+# Nomad and the Nomad logo are trademarks of HashiCorp.
+#
+# Documentation licensed under the Business Source License, Version 1.1.
+# The original work was translated from English into Brazilian Portuguese.
+# https://github.com/hashicorp/nomad/blob/-/LICENSE
+
+layout: docs
+page_title: index - Functions - Configuration Language
+description: >-
+  The index function returns an element from the given list or map
+  using the given index or key.
+---
+
+# `index` Function
+
+`index` finds the element at the index when handling lists, or the element at
+the key when handling maps.
+
+```hcl
+index(list, value)
+```
+
+## Examples
+
+```shell-session
+> index(["a", "b", "c"], 1)
+"b"
+```
+
+```shell-session
+> index({"a"=1, "c"=2, "d"=3}, "c")
+2
+```
+
+## Related Functions
+
+- [`element`](/nomad/docs/job-specification/hcl2/functions/collection/element) retrieves a particular element from a list given
+  its index.

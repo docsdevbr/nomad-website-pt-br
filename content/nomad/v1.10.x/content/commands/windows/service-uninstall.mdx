@@ -1,0 +1,29 @@
+---
+# Copyright (c) 2024 HashiCorp, Inc.
+# Nomad and the Nomad logo are trademarks of HashiCorp.
+#
+# Documentation licensed under the Business Source License, Version 1.1.
+# The original work was translated from English into Brazilian Portuguese.
+# https://github.com/hashicorp/nomad/blob/-/LICENSE
+
+layout: docs
+page_title: 'nomad windows service uninstall command reference'
+description: |
+  The `nomad windows service uninstall` command removes the Nomad
+  Windows service.
+---
+
+# `nomad windows service uninstall` command reference
+
+The `windows service uninstall` command removes the Nomad Windows service.
+
+## Usage
+
+```plaintext
+nomad windows service uninstall
+```
+
+The `windows service uninstall` command stops the Nomad service if
+it is currently running, deregisters the service with the Windows Event Log,
+and removes the Windows service. This command does not remove the installed
+Nomad binary or the data and configuration directories.

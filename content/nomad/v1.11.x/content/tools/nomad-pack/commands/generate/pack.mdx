@@ -1,0 +1,38 @@
+---
+# Copyright (c) 2024 HashiCorp, Inc.
+# Nomad and the Nomad logo are trademarks of HashiCorp.
+#
+# Documentation licensed under the Business Source License, Version 1.1.
+# The original work was translated from English into Brazilian Portuguese.
+# https://github.com/hashicorp/nomad/blob/-/LICENSE
+
+layout: commands
+page_title: nomad-pack generate pack command reference
+description: >-
+  Use the `nomad-pack generate pack` command to create a new Nomad pack.
+---
+
+# nomad-pack generate pack command reference
+
+Use the `nomad-pack generate pack` command to create a new Nomad pack.
+
+## Usage
+
+```plaintext
+nomad-pack generate pack <pack_name>
+```
+
+## Options
+
+- `-to-dir=<string>`: Path to write generated pack to.
+- `-overwrite`: If the output directory is not empty, should we overwrite?
+
+@include 'tools/nomad-pack/options-approval.mdx'
+
+## Examples
+
+Create a new pack named "my-new-pack" in the current directory.
+
+```shell
+nomad-pack generate pack my-new-pack
+```

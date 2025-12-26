@@ -1,0 +1,42 @@
+---
+# Copyright (c) 2024 HashiCorp, Inc.
+# Nomad and the Nomad logo are trademarks of HashiCorp.
+#
+# Documentation licensed under the Business Source License, Version 1.1.
+# The original work was translated from English into Brazilian Portuguese.
+# https://github.com/hashicorp/nomad/blob/-/LICENSE
+
+layout: docs
+page_title: 'Commands: quota'
+sidebar_title: quota
+description: |
+  The quota command is used to interact with quota specifications.
+---
+
+# Command: quota
+
+The `quota` command is used to interact with quota specifications.
+
+~> Quota commands are new in Nomad 0.7 and are only available with Nomad
+Enterprise.
+
+## Usage
+
+Usage: `nomad quota <subcommand> [options]`
+
+Run `nomad quota <subcommand> -h` for help on that subcommand. The following
+subcommands are available:
+
+- [`quota apply`][quotaapply] - Create or update a quota specification
+- [`quota delete`][quotadelete] - Delete a quota specification
+- [`quota init`][quotainit] - Create an example quota specification file
+- [`quota inspect`][quotainspect] - Inspect a quota specification
+- [`quota list`][quotalist] - List quota specifications
+- [`quota status`][quotastatus] - Display a quota's status and current usage
+
+[quotaapply]: /docs/commands/quota/apply
+[quotadelete]: /docs/commands/quota/delete
+[quotainit]: /docs/commands/quota/init
+[quotainspect]: /docs/commands/quota/inspect
+[quotalist]: /docs/commands/quota/list
+[quotastatus]: /docs/commands/quota/status

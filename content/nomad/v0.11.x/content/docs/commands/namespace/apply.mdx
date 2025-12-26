@@ -1,0 +1,49 @@
+---
+# Copyright (c) 2024 HashiCorp, Inc.
+# Nomad and the Nomad logo are trademarks of HashiCorp.
+#
+# Documentation licensed under the Business Source License, Version 1.1.
+# The original work was translated from English into Brazilian Portuguese.
+# https://github.com/hashicorp/nomad/blob/-/LICENSE
+
+layout: docs
+page_title: 'Commands: namespace apply'
+sidebar_title: apply
+description: |
+  The namespace apply command is used create or update a namespace.
+---
+
+# Command: namespace apply
+
+The `namespace apply` command is used create or update a namespace.
+
+~> Namespace commands are new in Nomad 0.7 and are only available with Nomad
+Enterprise.
+
+## Usage
+
+```plaintext
+nomad namespace apply [options] <namespace>
+```
+
+The `namespace apply` command requires the name of the namespace to be created
+or updated.
+
+## General Options
+
+@include 'general_options.mdx'
+
+## Apply Options
+
+- `-quota` : An optional quota to apply to the namespace.
+
+- `-description` : An optional human readable description for the namespace.
+
+## Examples
+
+Create a namespace with a quota
+
+```shell-session
+$ nomad namespace apply -description "Prod API servers" -quota prod api-prod
+Successfully applied namespace "api-prod"!
+```

@@ -1,0 +1,41 @@
+---
+# Copyright (c) 2024 HashiCorp, Inc.
+# Nomad and the Nomad logo are trademarks of HashiCorp.
+#
+# Documentation licensed under the Business Source License, Version 1.1.
+# The original work was translated from English into Brazilian Portuguese.
+# https://github.com/hashicorp/nomad/blob/-/LICENSE
+
+layout: docs
+page_title: 'nomad quota init command reference'
+description: |
+  The `nomad quota init` command generates an example quota specification that you can customize for your Nomad Enterprise quota specification.
+---
+
+# `nomad quota init` command reference
+
+The `quota init` command is used to create an example [quota specification][]
+file that can be used as a starting point to customize further.
+
+<EnterpriseAlert product="nomad"/>
+
+## Usage
+
+```plaintext
+nomad quota init
+```
+
+## Init options
+
+- `-json`: Create an example JSON quota specification.
+
+## Examples
+
+Create an example quota specification:
+
+```shell-session
+$ nomad quota init
+Example quota specification written to spec.hcl
+```
+
+[quota specification]: /nomad/docs/other-specifications/quota

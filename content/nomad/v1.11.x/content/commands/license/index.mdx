@@ -1,0 +1,35 @@
+---
+# Copyright (c) 2024 HashiCorp, Inc.
+# Nomad and the Nomad logo are trademarks of HashiCorp.
+#
+# Documentation licensed under the Business Source License, Version 1.1.
+# The original work was translated from English into Brazilian Portuguese.
+# https://github.com/hashicorp/nomad/blob/-/LICENSE
+
+layout: docs
+page_title: 'nomad license command reference'
+description: |
+  The `nomad license` command gets or inspects a Nomad Enterprise license.
+---
+
+# `nomad license` command reference
+
+The `license` commands can be used to retrieve license information from a
+server, or inspect and validate a license.
+
+<EnterpriseAlert/>
+
+## Usage
+
+```plaintext
+nomad license <subcommand> [options]
+```
+
+Run `nomad license <subcommand> -h` for help on that subcommand. The following
+subcommands are available:
+
+- [`license get`][get] - Get the current license from a server
+- [`license inspect`][inspect] - Inspect and validate a license
+
+[get]: /nomad/commands/license/get 'Get the current license from a server'
+[inspect]: /nomad/commands/license/inspect 'Inspect and validate a license'

@@ -1,0 +1,126 @@
+---
+# Copyright (c) 2024 HashiCorp, Inc.
+# Nomad and the Nomad logo are trademarks of HashiCorp.
+#
+# Documentation licensed under the Business Source License, Version 1.1.
+# The original work was translated from English into Brazilian Portuguese.
+# https://github.com/hashicorp/nomad/blob/-/LICENSE
+
+source_url: https://github.com/hashicorp/nomad/blob/main/website/content/docs/architecture/index.mdx
+revision: 53b083b8c5e09c8f12ae6a9db9fe6f88e75c2d12
+status: ready
+
+layout: docs
+page_title: Arquitetura
+description: >-
+  A arquitetura de sistema do Nomad suporta uma abordagem de "executar qualquer
+  carga de trabalho em qualquer lugar" para agendamento e orquestração.
+  Aprenda como regiões, servidores e clientes interagem e como os clusters Nomad
+  replicam dados e executam cargas de trabalho.
+---
+
+# Arquitetura
+
+Esta página fornece informações conceituais sobre a arquitetura do Nomad.
+Aprenda como regiões, servidores e clientes interagem e como os clusters Nomad
+replicam dados e executam cargas de trabalho.
+
+Nomad é um sistema complexo com muitas partes diferentes.
+Para ajudar pessoas usuárias e desenvolvedoras do Nomad a construir um modelo
+mental de como ele funciona, esta página documenta a arquitetura do sistema.
+
+Consulte o [glossário][] para obter mais detalhes sobre alguns dos termos
+discutidos aqui.
+
+~> **Tópico avançado!** Esta página aborda detalhes técnicos do Nomad.
+Você não precisa entender esses detalhes para usá-lo com eficácia.
+Os detalhes estão documentados aqui para aquelas pessoas que desejam aprendê-los
+sem precisar explorar o código-fonte.
+
+## Visão geral de alto nível
+
+Observando apenas uma única região, em um nível mais alto, o Nomad se parece com
+isso:
+
+[![Arquitetura regional](/img/nomad-architecture-region.png)](/img/nomad-architecture-region.png)
+
+Dentro de cada região, temos clientes e servidores.
+Os servidores são responsáveis por aceitar jobs de pessoas usuárias, gerenciar
+clientes e
+[calcular a alocação das tasks](/nomad/docs/concepts/scheduling/how-scheduling-works).
+Cada região pode ter clientes de vários data centers, permitindo que um pequeno
+número de servidores lide com clusters muito grandes.
+
+Em alguns casos, para disponibilidade ou escalabilidade, pode ser necessário
+executar várias regiões.
+O Nomad oferece suporte à federação de várias regiões em um único cluster.
+Em um nível mais alto, esta configuração se parece com isto:
+
+[![Arquitetura global](/img/nomad-architecture-global.png)](/img/nomad-architecture-global.png)
+
+As regiões são totalmente independentes umas das outras e não compartilham jobs,
+clientes ou estado.
+Elas são fracamente acopladas usando um protocolo gossip, que permite às pessoas
+usuárias enviar jobs para qualquer região ou consultar o estado de qualquer
+região de forma transparente.
+As solicitações são encaminhadas ao servidor apropriado para serem processadas e
+os resultados retornados.
+Os dados _não_ são replicados entre as regiões.
+
+Os servidores em cada região fazem parte de um único grupo de consenso.
+Isso significa que eles trabalham juntos para eleger um único líder, com funções
+extras.
+O líder é responsável por processar todas as consultas e transações.
+O Nomad é otimisticamente concorrente, o que significa que todos os servidores
+participam da tomada de decisões de agendamento em paralelo.
+O líder fornece a coordenação adicional necessária para fazer isso com segurança
+e para garantir que os clientes não sejam sobrecarregados.
+
+Cada região deve ter três ou cinco servidores.
+Isso estabelece um equilíbrio entre disponibilidade em caso de falha e
+desempenho, já que o consenso fica progressivamente mais lento à medida que mais
+servidores são adicionados.
+No entanto, não há limite para o número de clientes por região.
+
+Os clientes são configurados para se comunicar com seus servidores regionais e
+se comunicam usando chamadas de procedimento remoto (RPC) para se registrar,
+enviar heartbeats para verificar a disponibilidade, aguardar novas alocações e
+atualizar o status das alocações.
+Um cliente se registra com os servidores para fornecer os recursos disponíveis,
+atributos e drivers instalados.
+Os servidores usam essas informações para decisões de agendamento e criam
+alocações para atribuir trabalho aos clientes.
+
+As pessoas usuárias utilizam a CLI ou API do Nomad para enviar jobs aos
+servidores.
+Um job representa um estado desejado e fornece o conjunto de tasks que devem ser
+executadas.
+Os servidores são responsáveis pelo agendamento das tasks, o que é feito
+encontrando uma alocação ideal para cada task, de forma que a utilização de
+recursos seja maximizada, satisfazendo todas as restrições especificadas pelo
+job.
+A utilização de recursos é maximizada por bin packing, no qual o agendamento
+tenta utilizar todos os recursos de uma máquina sem esgotar nenhuma dimensão.
+Restrições de job podem ser usadas para garantir que uma aplicação esteja
+executando em um ambiente apropriado.
+As restrições podem ser requisitos técnicos baseados em recursos de hardware,
+como arquitetura e disponibilidade de GPUs, ou recursos de software, como
+sistema operacional e versão do kernel, ou podem ser restrições de negócios,
+como garantir que cargas de trabalho compatíveis com PCI sejam executadas em
+servidores apropriados.
+
+## Aprofundando
+
+Esta foi uma breve visão geral de alto nível da arquitetura do Nomad.
+Há mais detalhes disponíveis para cada um dos subsistemas.
+O [protocolo de consenso](/nomad/docs/architecture/cluster/consensus),
+[protocolo gossip](/nomad/docs/architecture/security/gossip) e o
+[design do agendador](/nomad/docs/concepts/scheduling/how-scheduling-works)
+estão todos documentados com mais detalhes.
+
+Para outros detalhes, consulte o código, [abra uma issue no GitHub][gh_issue]
+ou faça uma pergunta no [fórum da comunidade][forum].
+
+[gh_issue]: https://github.com/hashicorp/nomad/issues/new/choose
+[forum]: https://discuss.hashicorp.com/c/nomad
+[glossário]: /nomad/docs/glossary
